@@ -1,4 +1,6 @@
 package com.qburst.bind.skillforge.quiz.presentation.ui.landing.home
 
-class HomeUiState {
-}
+data class HomeUiState(
+    val loading: Boolean = false,
+    val error: String = "",
+)

@@ -1,4 +1,6 @@
 package com.qburst.bind.skillforge.quiz.presentation.ui.landing.home
 
-class HomeUiEvent {
+sealed class HomeUiEvent {
+    object onFetchHomeData : HomeUiEvent()
+    object onExploreClick : HomeUiEvent()
 }
