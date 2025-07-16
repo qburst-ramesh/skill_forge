@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Skill Forge</string>
+    <string name="sign_with_google">Sign in with Google</string>
+
+    <!--Login Screen-->
+    <string name="text_login_skill">Skill</string>
+    <string name="text_login_forge">Forge</string>
+    <string name="sign_in_with_google">Please Sign in with Google</string>
+
+    <!-- Landing Screen -->
+    <string name="landing_home">Home</string>
+    <string name="landing_progress">Progress</string>
+    <string name="landing_explore">Explore</string>
+    <string name="landing_profile">Profile</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcome_text">Upskill and advance your career with personalized quizzes and learning paths.</string>
+
+</resources>
