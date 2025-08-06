@@ -14,8 +14,8 @@ class AuthLoginMapper() : Mapper<LoginData, UserLoginResponse> {
 
     private fun transformLoginData(userLoginResponse: UserLoginResponse): LoginData {
         return LoginData(
-            access = userLoginResponse.userData.access,
-            refresh = userLoginResponse.userData.refresh,
+            accessToken = userLoginResponse.userData.access,
+            refreshToken = userLoginResponse.userData.refresh,
             department = userLoginResponse.userData.user.department,
             designation = userLoginResponse.userData.user.designation,
             email = userLoginResponse.userData.user.email,

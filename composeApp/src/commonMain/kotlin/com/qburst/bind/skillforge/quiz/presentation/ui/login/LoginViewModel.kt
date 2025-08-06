@@ -13,12 +13,16 @@ class LoginViewModel(
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
-    var token: String? = ""
-
     fun onEvent(event: LoginUiEvent) {
         when (event) {
             is LoginUiEvent.OnGoogleLoginClick -> {
-                loginWithGoogle()
+                viewModelScope.launch {
+                    loginUseCase.saveAccessAndRefreshToken(
+                        accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0NDY0OTM1LCJpYXQiOjE3NTM3OTQ2MzQsImp0aSI6IjMyMTZiZTI3YWRjYTRmMmZhNjYzNzIwMTk1ZmY0MmM5IiwidXNlcl9pZCI6MjF9.kQq1tFypqycVKCfJjztjujFiQJIi8SSYhv5AFzsvoL4",
+                        refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTA2OTczNSwiaWF0IjoxNzUzODYwMTM1LCJqdGkiOiI3ZTAxYjgwNDE1N2Q0YjUyYTIxMmQxOWJmZDgzYWNlYSIsInVzZXJfaWQiOjIxfQ.2-1smO2R7_Jg-e61di2z7qV_7-yHXcAwEhvCXLXdPrM"
+                    )
+                }
+//                loginWithGoogle()
             }
 
             is LoginUiEvent.OnLoginError -> {
@@ -26,31 +30,44 @@ class LoginViewModel(
             }
 
             is LoginUiEvent.OnLoginSuccess -> {
-                _uiState.value = _uiState.value.copy(loading = false, isLoggedIn = true, error = "")
+                event.loginData?.let {
+                    viewModelScope.launch {
+                        loginUseCase.saveAccessAndRefreshToken(
+                            accessToken = it.accessToken,
+                            refreshToken = it.refreshToken
+                        )
+                        println("Token ${it.accessToken}")
+                        println("Refresh Token ${it.refreshToken}")
+                        loginUseCase.saveUserLogin(isLoggedIn = true)
+                    }
+                }
+                _uiState.value = _uiState.value.copy(
+                    loading = false,
+                    isLoggedIn = true,
+                    userInfo = event.loginData
+                )
             }
 
             is LoginUiEvent.OnOAuthTokenReceived -> {
-                println(event.userData?.token)
-                token = event.userData?.token
-                _uiState.value = _uiState.value.copy(loading = true, error = "")
-                viewModelScope.launch {
-                    if (event.userData != null) {
-                        val result = loginUseCase.login(googleUser = event.userData)
-                        if (result.isSuccess) {
-                            _uiState.value = _uiState.value.copy(
-                                loading = false,
-                                isLoggedIn = true,
-                                userInfo = result.getOrNull()
-                            )
+                event.userData?.token.let { authToken ->
+                    println(authToken)
+                    _uiState.value = _uiState.value.copy(loading = true, error = "")
+                    viewModelScope.launch {
+                        if (event.userData != null) {
+                            val result = loginUseCase.login(googleUser = event.userData)
+                            if (result.isSuccess) {
+                                onEvent(event = LoginUiEvent.OnLoginSuccess(loginData = result.getOrNull()))
+                            } else {
+                                _uiState.value = _uiState.value.copy(
+                                    loading = false,
+                                    error = result.exceptionOrNull()?.message
+                                        ?: "Server login failed"
+                                )
+                            }
                         } else {
-                            _uiState.value = _uiState.value.copy(
-                                loading = false,
-                                error = result.exceptionOrNull()?.message ?: "Server login failed"
-                            )
+                            _uiState.value =
+                                _uiState.value.copy(loading = false, error = "Google login failed")
                         }
-                    } else {
-                        _uiState.value =
-                            _uiState.value.copy(loading = false, error = "Google login failed")
                     }
                 }
             }

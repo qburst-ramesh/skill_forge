@@ -35,6 +35,10 @@ koinComposeViewmodelNavigation = "4.1.0"
 #logging
 napierVersion = "2.7.1"
 
+#Image loading
+coilCompose = "3.0.4"
+coilNetworkOkhttp = "3.2.0"
+
 [libraries]
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
@@ -81,6 +85,10 @@ datastore-preferences = { module = "androidx.datastore:datastore-preferences", v
 
 # Logging
 napier = { module = "io.github.aakira:napier", version.ref = "napierVersion" }
+
+# Image loading
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilNetworkOkhttp" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

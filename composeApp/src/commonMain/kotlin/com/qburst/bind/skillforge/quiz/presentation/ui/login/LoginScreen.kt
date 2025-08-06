@@ -58,7 +58,6 @@ fun LoginScreen(
 
     LaunchedEffect(viewModel.uiState) {
         viewModel.uiState.filter { it.isLoggedIn }.collect {
-            // Navigate to Next screen.
             onLoginSuccess()
         }
     }

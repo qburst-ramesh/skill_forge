@@ -2,7 +2,6 @@ package com.qburst.bind.skillforge.quiz.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-
 val PrimaryColor = Color(0xFF4C2563)
 val PrimaryVariantColor = Color(0xFFCA3D49)
 val AccentColor = Color(0xFFC62F79)
@@ -28,5 +27,7 @@ val grey_700 = Color(0xFF616161) // Use with white text
 val orange_400 = Color(0xFFffa726) // Use with black text
 
 val gray_background = Color(0xFFFBF9F7)
-//#E0B1CB4A
+val topic_home_background = Color(0xFFFFFDFD)
 
+val App_bar_background_color = Color(0xFFBE95C4)
+val WhiteColor = Color(0xFFFFFFFF)

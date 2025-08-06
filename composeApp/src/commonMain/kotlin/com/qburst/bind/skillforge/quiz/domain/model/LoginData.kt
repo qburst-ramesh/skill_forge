@@ -1,8 +1,8 @@
 package com.qburst.bind.skillforge.quiz.domain.model
 
 data class LoginData(
-    val access: String = "",
-    val refresh: String = "",
+    val accessToken: String = "",
+    val refreshToken: String = "",
     val department: String = "",
     val designation: String = "",
     val email: String = "",

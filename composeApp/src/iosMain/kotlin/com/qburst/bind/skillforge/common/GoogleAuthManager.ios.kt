@@ -38,6 +38,6 @@ actual class GoogleAuthManager(private val viewController: UIViewController) : I
     }
 
     override suspend fun signOut() {
-        TODO("Not yet implemented")
+        // SignOut
     }
 }
