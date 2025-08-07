@@ -1,5 +1,6 @@
 package com.qburst.bind.skillforge.quiz.data.repo.home
 
+import com.qburst.bind.skillforge.quiz.data.mapper.Mapper
 import com.qburst.bind.skillforge.quiz.data.model.ApiResponse
 import com.qburst.bind.skillforge.quiz.data.model.ErrorType
 import com.qburst.bind.skillforge.quiz.data.model.getErrorData
@@ -9,10 +10,7 @@ import com.qburst.bind.skillforge.quiz.data.networking.apiEndPoint
 import com.qburst.bind.skillforge.quiz.data.networking.safeRequest
 import com.qburst.bind.skillforge.quiz.data.repo.BaseResponse
 import com.qburst.bind.skillforge.quiz.data.repo.home.entity.HomeResponseData
-import com.qburst.bind.skillforge.quiz.domain.model.BadgeData
-import com.qburst.bind.skillforge.quiz.domain.model.BadgeLevel
 import com.qburst.bind.skillforge.quiz.domain.model.HomeData
-import com.qburst.bind.skillforge.quiz.domain.model.TopicData
 import com.qburst.bind.skillforge.quiz.domain.repo.HomeRepo
 import com.qburst.bind.skillforge.quiz.domain.repo.TokenProvider
 import com.qburst.bind.skillforge.quiz.utils.toThrowable
@@ -29,7 +27,8 @@ data class HomeRequest(
 
 class HomeRepoImpl(
     val apiClientHelper: ApiClientHelper,
-    val tokenProvider: TokenProvider
+    val tokenProvider: TokenProvider,
+    val mapper: Mapper<HomeData, List<HomeResponseData?>>,
 ) : HomeRepo {
     override suspend fun getHomeData(): Result<HomeData> {
         val response = apiClientHelper.client.safeRequest<HomeBaseResponse, HomeRequest>(
@@ -50,40 +49,16 @@ class HomeRepoImpl(
 
             is ApiResponse.Success<HomeBaseResponse> -> {
                 val data: List<HomeResponseData?> = response.body.data
-//                val mapperData: HomeData = mapper.transform(data)
-                val dat: List<TopicData?> = data.map {
-                    it?.toTopicData()
+                val mapperData: HomeData = mapper.transform(data)
+                if (mapperData.topicList.isEmpty()) {
+                    return Result.failure("No topics found".toThrowable())
                 }
-
                 Result.success(
                     HomeData(
-                        topicList = dat
+                        topicList = mapperData.topicList
                     )
                 )
             }
         }
-    }
-}
-
-fun HomeResponseData.toTopicData(): TopicData = TopicData(
-    id = id,
-    name = name,
-    description = description ?: "",
-    skill = skill,
-    title = name ?: "",
-    imageUrl = "",
-    isCompleted = false,
-    badgeData = this.toBadgeData()
-)
-
-fun HomeResponseData.toBadgeData(): BadgeData? {
-    return if (this.badgeInfo != null) {
-        BadgeData(
-            badgeLevel = BadgeLevel.fromLevel(level = this.badgeInfo.badgeLevel),
-            skillName = this.badgeInfo.skillName,
-            hasBadgeProgress = this.badgeInfo.hasBadgeProgression
-        )
-    } else {
-        null
     }
 }

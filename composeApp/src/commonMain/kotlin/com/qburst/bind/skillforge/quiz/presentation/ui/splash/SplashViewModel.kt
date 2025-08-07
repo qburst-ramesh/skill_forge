@@ -25,8 +25,8 @@ class SplashViewModel(
 
             viewModelScope.launch {
                 loginUseCase.saveAccessAndRefreshToken(
-                    accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0NDY0OTM1LCJpYXQiOjE3NTM3OTQ2MzQsImp0aSI6IjMyMTZiZTI3YWRjYTRmMmZhNjYzNzIwMTk1ZmY0MmM5IiwidXNlcl9pZCI6MjF9.kQq1tFypqycVKCfJjztjujFiQJIi8SSYhv5AFzsvoL4",
-                    refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTA2OTczNSwiaWF0IjoxNzUzODYwMTM1LCJqdGkiOiI3ZTAxYjgwNDE1N2Q0YjUyYTIxMmQxOWJmZDgzYWNlYSIsInVzZXJfaWQiOjIxfQ.2-1smO2R7_Jg-e61di2z7qV_7-yHXcAwEhvCXLXdPrM"
+                    accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MTUzOTc4LCJpYXQiOjE3NTM4NjAxMzUsImp0aSI6IjY1OTU1MzQ2ZWFkMzQ0ZWQ4OWVmNmE0YTUxOTY0MmI2IiwidXNlcl9pZCI6MjF9.ap_Qp3OG5uC0WirLgHniYPi1z5p9qlci41e2MaMxUWo",
+                    refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTc1ODc3OCwiaWF0IjoxNzU0NTQ5MTc4LCJqdGkiOiJiZDljNGI0ZGQ5MWI0ZGZiODUzYmVkYzk3MmNjY2FlYiIsInVzZXJfaWQiOjIxfQ.x-m2y2EeEuap3oO9g2hy52A3wWPBNe1aGtroQ-h6tjc"
                 )
             }
 

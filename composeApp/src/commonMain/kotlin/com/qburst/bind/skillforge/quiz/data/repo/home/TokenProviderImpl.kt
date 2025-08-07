@@ -5,6 +5,7 @@ import com.qburst.bind.skillforge.quiz.data.networking.EndPoints
 import com.qburst.bind.skillforge.quiz.data.networking.apiEndPoint
 import com.qburst.bind.skillforge.quiz.data.repo.auth.entity.RefreshTokenResponse
 import com.qburst.bind.skillforge.quiz.domain.repo.TokenProvider
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.headers
@@ -32,6 +33,7 @@ class TokenProviderImpl(
     }
 
     override suspend fun refreshToken(): Boolean {
+        Napier.d(message = "Refreshing token ${getRefreshToken()}", tag = "TokenProviderImpl")
         val refreshToken = getRefreshToken() ?: return false
         return try {
             val response: HttpResponse = refreshClient.post {

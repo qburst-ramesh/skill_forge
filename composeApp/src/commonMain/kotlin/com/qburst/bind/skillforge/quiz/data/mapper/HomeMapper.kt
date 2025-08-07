@@ -1,6 +1,8 @@
 package com.qburst.bind.skillforge.quiz.data.mapper
 
 import com.qburst.bind.skillforge.quiz.data.repo.home.entity.HomeResponseData
+import com.qburst.bind.skillforge.quiz.domain.model.BadgeData
+import com.qburst.bind.skillforge.quiz.domain.model.BadgeLevel
 import com.qburst.bind.skillforge.quiz.domain.model.HomeData
 import com.qburst.bind.skillforge.quiz.domain.model.TopicData
 
@@ -18,17 +20,32 @@ class HomeMapper() : Mapper<HomeData, List<HomeResponseData?>> {
         )
     }
 
-    private fun transformTopic(homeResponseData: List<HomeResponseData?>): List<TopicData> {
+    private fun transformTopic(homeResponseData: List<HomeResponseData?>): List<TopicData?> {
         return homeResponseData.map {
-            TopicData(
-                id = it?.id ?: 0,
-                name = it?.name ?: "",
-                description = it?.description ?: "",
-                skill = it?.skill,
-                title = it?.name ?: "",
-                imageUrl = "",
-                isCompleted = false
-            )
+            it?.toTopicData()
         }
+    }
+}
+
+fun HomeResponseData.toTopicData(): TopicData = TopicData(
+    id = id,
+    name = name,
+    description = description,
+    skill = skill,
+    title = name,
+    imageUrl = "",
+    isCompleted = false,
+    badgeData = this.toBadgeData()
+)
+
+fun HomeResponseData.toBadgeData(): BadgeData? {
+    return if (this.badgeInfo != null) {
+        BadgeData(
+            badgeLevel = BadgeLevel.fromLevel(level = this.badgeInfo.badgeLevel),
+            skillName = this.badgeInfo.skillName,
+            hasBadgeProgress = this.badgeInfo.hasBadgeProgression
+        )
+    } else {
+        null
     }
 }

@@ -28,6 +28,10 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+
+private const val HOME_MAPPER_NAME = "HomeMapper"
+private const val AUTH_MAPPER_NAME = "AuthMapper"
+
 val baseModule = module {
 
 }
@@ -56,7 +60,9 @@ val networkModule = module {
 val dataModule = module {
     single<AuthRepo> {
         AuthRepoImpl(
-            apiClientHelper = get(), authMapper = get(), tokenProvider = get()
+            apiClientHelper = get(),
+            authMapper = get(named(AUTH_MAPPER_NAME)),
+            tokenProvider = get()
         )
     }
 
@@ -66,7 +72,9 @@ val dataModule = module {
 
     single<HomeRepo> {
         HomeRepoImpl(
-            apiClientHelper = get(), tokenProvider = get()
+            apiClientHelper = get(),
+            tokenProvider = get(),
+            mapper = get(named(HOME_MAPPER_NAME))
         )
     }
 }
@@ -91,8 +99,8 @@ val viewModelModule = module {
 }
 
 val mapperModule = module {
-    single<Mapper<HomeData, List<HomeResponseData?>>> { HomeMapper() }
-    single<Mapper<LoginData, UserLoginResponse>> { AuthLoginMapper() }
+    single<Mapper<HomeData, List<HomeResponseData?>>>(named(HOME_MAPPER_NAME)) { HomeMapper() }
+    single<Mapper<LoginData, UserLoginResponse>>(named(AUTH_MAPPER_NAME)) { AuthLoginMapper() }
 }
 
 fun appModule() = listOf(
@@ -104,3 +112,4 @@ fun appModule() = listOf(
     viewModelModule,
     mapperModule
 )
+
