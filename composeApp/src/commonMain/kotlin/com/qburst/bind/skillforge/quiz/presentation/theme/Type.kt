@@ -6,7 +6,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.lato_black
 import kotlinproject.composeapp.generated.resources.lato_black_italic
@@ -80,27 +79,27 @@ fun LatoTypography(): Typography {
     return Typography(
         headlineSmall = TextStyle(
             fontWeight = FontWeight.SemiBold,
-            fontSize = 24.sp,
+            fontSize = FontSize.size_24,
             fontFamily = lato
         ),
         titleLarge = TextStyle(
             fontWeight = FontWeight.Normal,
-            fontSize = 18.sp,
+            fontSize = FontSize.size_18,
             fontFamily = lato
         ),
         bodyLarge = TextStyle(
             fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
+            fontSize = FontSize.size_16,
             fontFamily = lato
         ),
         bodyMedium = TextStyle(
             fontWeight = FontWeight.Medium,
-            fontSize = 14.sp,
+            fontSize = FontSize.size_8,
             fontFamily = lato
         ),
         labelMedium = TextStyle(
             fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp,
+            fontSize = FontSize.size_12,
             fontFamily = lato
         ),
     )
@@ -120,27 +119,27 @@ fun LatoTypography(): Typography {
 //    return Typography(
 //        headlineSmall = TextStyle(
 //            fontWeight = FontWeight.SemiBold,
-//            fontSize = 24.sp,
+//            fontSize = FontSize.size_24,
 //            fontFamily = stallion
 //        ),
 //        titleLarge = TextStyle(
 //            fontWeight = FontWeight.Normal,
-//            fontSize = 18.sp,
+//            fontSize = FontSize.size_18,
 //            fontFamily = stallion
 //        ),
 //        bodyLarge = TextStyle(
 //            fontWeight = FontWeight.Normal,
-//            fontSize = 16.sp,
+//            fontSize = FontSize.size_16,
 //            fontFamily = stallion
 //        ),
 //        bodyMedium = TextStyle(
 //            fontWeight = FontWeight.Medium,
-//            fontSize = 14.sp,
+//            fontSize = FontSize.size_8,
 //            fontFamily = stallion
 //        ),
 //        labelMedium = TextStyle(
 //            fontWeight = FontWeight.SemiBold,
-//            fontSize = 12.sp,
+//            fontSize = FontSize.size_12,
 //            fontFamily = stallion
 //        ),
 //    )

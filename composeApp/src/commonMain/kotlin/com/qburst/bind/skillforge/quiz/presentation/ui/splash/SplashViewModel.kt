@@ -17,7 +17,7 @@ class SplashViewModel(
     init {
         viewModelScope.launch {
             val token = loginUseCase.getAccessToken()
-            print("Splash Viewmodel Token ${token}")
+            Napier.d("Splash Viewmodel Token ${token}")
             Napier.e(
                 message = "Splash Viewmodel Token ${token}",
                 tag = "SplashScreen"

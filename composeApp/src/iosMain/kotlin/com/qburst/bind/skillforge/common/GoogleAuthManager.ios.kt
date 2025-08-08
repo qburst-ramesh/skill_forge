@@ -1,5 +1,6 @@
 package com.qburst.bind.skillforge.common// iosMain/GoogleAuthManager.kt
 import com.qburst.bind.skillforge.quiz.presentation.components.GoogleUser
+import io.github.aakira.napier.Napier
 import platform.UIKit.UIApplication
 import platform.UIKit.UIViewController
 import kotlin.coroutines.resume
@@ -18,7 +19,7 @@ actual class GoogleAuthManager(private val viewController: UIViewController) : I
             GIDSignIn.sharedInstance
                 .signInWithPresentingViewController(rootUiView) { gidSignInResult, nsError ->
                     if (nsError != null) {
-                        println("Something went wrong during signInWithPresentingViewController $nsError")
+                        Napier.d("Something went wrong during signInWithPresentingViewController $nsError")
                     } else {
                         val idToken = gidSignInResult?.user?.idToken
                         gidSignInResult?.user?.profile

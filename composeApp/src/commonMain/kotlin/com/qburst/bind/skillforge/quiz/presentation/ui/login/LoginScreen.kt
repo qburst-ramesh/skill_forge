@@ -30,11 +30,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.qburst.bind.skillforge.quiz.presentation.components.DualTitle
 import com.qburst.bind.skillforge.quiz.presentation.components.GoogleButtonUiContainer
 import com.qburst.bind.skillforge.quiz.presentation.components.GoogleUser
+import com.qburst.bind.skillforge.quiz.presentation.theme.FontSize
+import com.qburst.bind.skillforge.quiz.presentation.theme.SpacerSize
+import io.github.aakira.napier.Napier
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.google_icon
 import kotlinproject.composeapp.generated.resources.lato_black
@@ -64,7 +65,7 @@ fun LoginScreen(
 
     fun onReceiveOAuth(result: Result<GoogleUser?>) {
         result.onFailure {
-            println(message = it.message)
+            Napier.d(message = it.message ?: "Error receiving OAuth token", tag = "LoginScreen")
         }.onSuccess {
             viewModel.onEvent(event = LoginUiEvent.OnOAuthTokenReceived(userData = it))
         }
@@ -75,16 +76,16 @@ fun LoginScreen(
     ) {
         Column(
             modifier = Modifier.fillMaxSize().padding(
-                horizontal = 16.dp,
-                vertical = 16.dp
+                horizontal = SpacerSize.size_16,
+                vertical = SpacerSize.size_16
             ),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            DualTitle(textSize = 32.sp)
+            DualTitle(textSize = FontSize.size_32)
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(SpacerSize.size_16))
 
             Text(
                 stringResource(Res.string.sign_in_with_google), fontFamily = FontFamily(
@@ -93,7 +94,7 @@ fun LoginScreen(
                         weight = FontWeight.Bold,
                         style = FontStyle.Normal
                     )
-                ), color = Color.Black, fontSize = 16.sp
+                ), color = Color.Black, fontSize = FontSize.size_16
             )
 
             Box(
@@ -101,7 +102,8 @@ fun LoginScreen(
             )
 
             GoogleButtonUiContainer(
-                modifier = Modifier.fillMaxWidth(fraction = 0.75f).height(height = 48.dp),
+                modifier = Modifier.fillMaxWidth(fraction = 0.75f)
+                    .height(height = SpacerSize.size_48),
                 onGoogleSignInResult = ::onReceiveOAuth
             ) {
                 Button(
@@ -112,8 +114,8 @@ fun LoginScreen(
                         )
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                    elevation = ButtonDefaults.buttonElevation(4.dp),
-                    shape = RoundedCornerShape(8.dp)
+                    elevation = ButtonDefaults.buttonElevation(SpacerSize.size_4),
+                    shape = RoundedCornerShape(SpacerSize.size_8)
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -122,9 +124,9 @@ fun LoginScreen(
                         Image(
                             painter = painterResource(Res.drawable.google_icon),
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(SpacerSize.size_24)
                         )
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(SpacerSize.size_16))
                         Text(
                             text = stringResource(Res.string.sign_with_google),
                             color = Color.Black,
@@ -147,12 +149,12 @@ fun LoginScreen(
 
             if (state.loading) {
                 CircularProgressIndicator()
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(SpacerSize.size_16))
             }
 
             if (state.error.isNotEmpty()) {
                 Text(state.error, color = Color.Red)
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(SpacerSize.size_8))
             }
         }
     }

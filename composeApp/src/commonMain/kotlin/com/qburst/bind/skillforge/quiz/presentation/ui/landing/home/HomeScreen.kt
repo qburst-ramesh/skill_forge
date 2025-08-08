@@ -27,12 +27,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.qburst.bind.skillforge.quiz.presentation.components.CenterAppTopBar
 import com.qburst.bind.skillforge.quiz.presentation.components.DualTitle
 import com.qburst.bind.skillforge.quiz.presentation.components.HomeTopicItem
+import com.qburst.bind.skillforge.quiz.presentation.theme.FontSize
 import com.qburst.bind.skillforge.quiz.presentation.theme.PrimaryColor
+import com.qburst.bind.skillforge.quiz.presentation.theme.SpacerSize
 import com.qburst.bind.skillforge.quiz.presentation.theme.gray_background
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.app_name
@@ -47,7 +47,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun HomeScreen() {
-    val topCornerRadius = 24.dp
+    val topCornerRadius = SpacerSize.size_24
     val viewModel: HomeViewModel = koinInject()
     val state by viewModel.uiState.collectAsState()
 
@@ -56,7 +56,7 @@ fun HomeScreen() {
             CenterAppTopBar(
                 title = {
                     DualTitle(
-                        textSize = 24.sp,
+                        textSize = FontSize.size_24,
                         isFromHome = true
                     )
                 }
@@ -81,7 +81,7 @@ fun HomeScreen() {
                     modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(SpacerSize.size_32)
                     )
                 }
             } else {
@@ -92,12 +92,15 @@ fun HomeScreen() {
                     LazyColumn {
                         item {
                             Card(
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
+                                modifier = Modifier.padding(
+                                    horizontal = SpacerSize.size_16,
+                                    vertical = SpacerSize.size_16
+                                )
                                     .fillMaxWidth(),
                                 colors = CardDefaults.cardColors(
                                     containerColor = gray_background
                                 ),
-                                elevation = CardDefaults.cardElevation(6.dp),
+                                elevation = CardDefaults.cardElevation(SpacerSize.size_6),
                                 shape = RoundedCornerShape(
                                     topEnd = topCornerRadius,
                                     bottomStart = topCornerRadius
@@ -106,10 +109,12 @@ fun HomeScreen() {
                                 Column {
                                     Text(
                                         text = stringResource(Res.string.app_name),
-                                        fontSize = 20.sp,
+                                        fontSize = FontSize.size_20,
                                         color = Color.Black,
                                         modifier = Modifier.padding(
-                                            start = 16.dp, top = 16.dp, end = 16.dp
+                                            start = SpacerSize.size_16,
+                                            top = SpacerSize.size_16,
+                                            end = SpacerSize.size_16
                                         ),
                                         fontFamily = FontFamily(
                                             Font(
@@ -121,8 +126,8 @@ fun HomeScreen() {
                                     )
                                     Text(
                                         text = stringResource(Res.string.home_welcome_text),
-                                        modifier = Modifier.padding(all = 16.dp),
-                                        fontSize = 16.sp,
+                                        modifier = Modifier.padding(all = SpacerSize.size_16),
+                                        fontSize = FontSize.size_16,
                                         color = PrimaryColor,
                                         fontFamily = FontFamily(
                                             Font(
@@ -137,12 +142,16 @@ fun HomeScreen() {
 
                             Row(
                                 modifier = Modifier.fillMaxWidth()
-                                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                                    .padding(
+                                        start = SpacerSize.size_16,
+                                        end = SpacerSize.size_16,
+                                        bottom = SpacerSize.size_16
+                                    ),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(
                                     text = stringResource(Res.string.upgrade_your_skills),
-                                    fontSize = 20.sp,
+                                    fontSize = FontSize.size_20,
                                     color = PrimaryColor,
                                     fontFamily = FontFamily(
                                         Font(
@@ -155,7 +164,7 @@ fun HomeScreen() {
 
                                 Text(
                                     text = stringResource(Res.string.explore),
-                                    fontSize = 16.sp,
+                                    fontSize = FontSize.size_16,
                                     color = Color.Blue,
                                     fontFamily = FontFamily(
                                         Font(
@@ -183,15 +192,15 @@ fun HomeScreen() {
                         }
 
                         item {
-                            Box(modifier = Modifier.padding(bottom = 8.dp))
+                            Box(modifier = Modifier.padding(bottom = SpacerSize.size_8))
                         }
                     }
                     /*LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        contentPadding = PaddingValues(SpacerSize.size_8),
+                        verticalArrangement = Arrangement.spacedBy(SpacerSize.size_8),
+                        horizontalArrangement = Arrangement.spacedBy(SpacerSize.size_8)
                     ) {
 
                         val data = state.homeData?.topicList ?: emptyList()

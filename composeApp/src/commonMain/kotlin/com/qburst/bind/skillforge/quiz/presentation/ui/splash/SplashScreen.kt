@@ -25,12 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.qburst.bind.skillforge.quiz.presentation.theme.FontSize
+import com.qburst.bind.skillforge.quiz.presentation.theme.SpacerSize
 import io.github.aakira.napier.Napier
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.app_name
-import kotlinproject.composeapp.generated.resources.stallion_beatsides_regular
+import kotlinproject.composeapp.generated.resources.lato_bold
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import org.jetbrains.compose.resources.Font
@@ -48,8 +48,6 @@ internal fun SplashScreen(onNavigate: (token: String?) -> Unit = {}) {
         isShowSplash = false
         delay(3000)
         viewModel.uiState.filter { !it.loading }.collect {
-
-            print("Splash Viewmodel Token ${state.token}")
 
             Napier.e(
                 message = "Splash Token ${state.token}",
@@ -73,17 +71,17 @@ internal fun SplashScreen(onNavigate: (token: String?) -> Unit = {}) {
                 Text(
                     stringResource(Res.string.app_name), fontFamily = FontFamily(
                         Font(
-                            resource = Res.font.stallion_beatsides_regular,
+                            resource = Res.font.lato_bold,
                             weight = FontWeight.Normal,
                             style = FontStyle.Normal
                         )
                     ),
                     color = MaterialTheme.colorScheme.background,
-                    fontSize = 58.sp
+                    fontSize = FontSize.size_58
                 )
             }
             CircularProgressIndicator(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = SpacerSize.size_16),
                 color = MaterialTheme.colorScheme.tertiary
             )
         }

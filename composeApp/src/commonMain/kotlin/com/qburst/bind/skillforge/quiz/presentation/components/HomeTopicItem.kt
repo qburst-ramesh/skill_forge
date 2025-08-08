@@ -26,11 +26,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.qburst.bind.skillforge.quiz.domain.model.BadgeData
+import com.qburst.bind.skillforge.quiz.domain.model.BadgeLevel
 import com.qburst.bind.skillforge.quiz.domain.model.TopicData
+import com.qburst.bind.skillforge.quiz.presentation.theme.FontSize
 import com.qburst.bind.skillforge.quiz.presentation.theme.PrimaryColor
+import com.qburst.bind.skillforge.quiz.presentation.theme.SpacerSize
 import com.qburst.bind.skillforge.quiz.presentation.theme.WhiteColor
 import com.qburst.bind.skillforge.quiz.presentation.theme.topic_home_background
 import kotlinproject.composeapp.generated.resources.Res
@@ -41,6 +43,7 @@ import kotlinproject.composeapp.generated.resources.start_quiz
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HomeTopicItem(
@@ -51,15 +54,15 @@ fun HomeTopicItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        shape = RoundedCornerShape(size = 16.dp),
+            .padding(horizontal = SpacerSize.size_16, vertical = SpacerSize.size_8),
+        shape = RoundedCornerShape(size = SpacerSize.size_16),
         colors = CardDefaults.cardColors(containerColor = topic_home_background),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(SpacerSize.size_4)
     ) {
         if (isRow) {
             Column {
                 Row(
-                    modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                    modifier = Modifier.padding(SpacerSize.size_16).fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box(
@@ -69,29 +72,29 @@ fun HomeTopicItem(
                         Image(
                             painter = painterResource(Res.drawable.google_icon),
                             contentDescription = null,
-                            modifier = Modifier.size(40.dp).wrapContentHeight(
+                            modifier = Modifier.size(SpacerSize.size_40).wrapContentHeight(
                                 align = Alignment.CenterVertically
                             )
                         )
                     }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(SpacerSize.size_16))
 
                     Column {
                         Text(
                             text = topicData.name,
-                            fontSize = 16.sp,
+                            fontSize = FontSize.size_16,
                             maxLines = 2,
                             fontWeight = FontWeight.Bold,
                             fontFamily = FontFamily.SansSerif,
                             overflow = Ellipsis
                         )
 
-                        Box(modifier = Modifier.height(8.dp))
+                        Box(modifier = Modifier.height(SpacerSize.size_8))
 
                         Text(
                             text = topicData.description,
-                            fontSize = 16.sp,
+                            fontSize = FontSize.size_16,
                             fontStyle = FontStyle.Normal,
                             fontFamily = FontFamily.Default,
                             color = Color.Gray,
@@ -105,8 +108,13 @@ fun HomeTopicItem(
                     onClick = onClick,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp),
-                    shape = RoundedCornerShape(5.dp),
+                        .padding(
+                            start = SpacerSize.size_16,
+                            end = SpacerSize.size_16,
+                            top = SpacerSize.size_8,
+                            bottom = SpacerSize.size_16
+                        ),
+                    shape = RoundedCornerShape(SpacerSize.size_5),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = PrimaryColor,
                         contentColor = WhiteColor
@@ -114,7 +122,7 @@ fun HomeTopicItem(
                     content = {
                         Text(
                             text = stringResource(Res.string.start_quiz),
-                            fontSize = 16.sp,
+                            fontSize = FontSize.size_16,
                             fontFamily = FontFamily(
                                 Font(
                                     resource = Res.font.lato_regular,
@@ -129,7 +137,7 @@ fun HomeTopicItem(
             }
         } else {
             Column(
-                modifier = Modifier.padding(16.dp).fillMaxWidth()
+                modifier = Modifier.padding(SpacerSize.size_16).fillMaxWidth()
             ) {
                 Box(
                     modifier = Modifier.fillMaxWidth()
@@ -137,22 +145,22 @@ fun HomeTopicItem(
                     topicData.badgeData?.let {
                         Card(
                             modifier = Modifier.align(Alignment.TopStart),
-                            shape = RoundedCornerShape(8.dp),
+                            shape = RoundedCornerShape(SpacerSize.size_8),
                             colors = CardDefaults.cardColors(
                                 containerColor = it.badgeLevel.backgroundColor
                             ),
-                            elevation = CardDefaults.cardElevation(0.dp)
+                            elevation = CardDefaults.cardElevation(SpacerSize.size_0)
                         ) {
                             Text(
                                 text = it.badgeLevel.level,
                                 color = Color.Gray,
                                 modifier = Modifier.padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    top = 4.dp,
-                                    bottom = 4.dp
+                                    start = SpacerSize.size_16,
+                                    end = SpacerSize.size_16,
+                                    top = SpacerSize.size_4,
+                                    bottom = SpacerSize.size_4
                                 ),
-                                fontSize = 13.sp
+                                fontSize = FontSize.size_13
                             )
                         }
 
@@ -165,18 +173,18 @@ fun HomeTopicItem(
                         AsyncImage(
                             model = topicData.imageUrl,
                             contentDescription = topicData.name,
-                            modifier = Modifier.size(72.dp),
+                            modifier = Modifier.size(SpacerSize.size_72),
                             placeholder = painterResource(Res.drawable.place_holder),
                             error = painterResource(Res.drawable.place_holder)
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(SpacerSize.size_8))
 
                 Text(
                     text = topicData.name,
-                    fontSize = 16.sp,
+                    fontSize = FontSize.size_16,
                     maxLines = 2,
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
@@ -184,7 +192,7 @@ fun HomeTopicItem(
                     overflow = Ellipsis
                 )
 
-                Box(modifier = Modifier.height(8.dp))
+                Box(modifier = Modifier.height(SpacerSize.size_8))
 
                 ReadMoreText(
                     text = topicData.description,
@@ -195,8 +203,8 @@ fun HomeTopicItem(
                     onClick = onClick,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    shape = RoundedCornerShape(5.dp),
+                        .padding(top = SpacerSize.size_8),
+                    shape = RoundedCornerShape(SpacerSize.size_5),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = PrimaryColor,
                         contentColor = WhiteColor
@@ -204,7 +212,7 @@ fun HomeTopicItem(
                     content = {
                         Text(
                             text = stringResource(Res.string.start_quiz),
-                            fontSize = 16.sp,
+                            fontSize = FontSize.size_16,
                             fontFamily = FontFamily(
                                 Font(
                                     resource = Res.font.lato_regular,
@@ -219,4 +227,25 @@ fun HomeTopicItem(
             }
         }
     }
+}
+
+@Composable
+@Preview()
+fun onHomeTopicItemPreview() {
+    HomeTopicItem(
+        topicData = TopicData(
+            id = 1,
+            name = "Kotlin Basics",
+            description = "Learn the fundamentals of Kotlin programming language.",
+            imageUrl = "https://example.com/kotlin.png",
+            badgeData = BadgeData(
+                badgeLevel = BadgeLevel.EXPERT,
+                skillName = BadgeLevel.EXPERT.name,
+            ),
+            title = "Title",
+            isCompleted = false,
+            skill = "saojda"
+        ),
+        onClick = {}
+    )
 }

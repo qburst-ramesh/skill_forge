@@ -17,14 +17,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.qburst.bind.skillforge.quiz.presentation.theme.FontSize
+import com.qburst.bind.skillforge.quiz.presentation.theme.SpacerSize
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
 fun ReadMoreText(
     text: String,
-    minimizedMaxLines: Int = 3 // number of lines to show before "Read More"
+    minimizedMaxLines: Int = 2 // number of lines to show before "Read More"
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     var isOverflowing by remember { mutableStateOf(false) }
@@ -41,7 +42,7 @@ fun ReadMoreText(
                 }
             },
             modifier = Modifier.animateContentSize(),
-            fontSize = 16.sp,
+            fontSize = FontSize.size_16,
             fontStyle = FontStyle.Normal,
             fontFamily = FontFamily.Default,
             color = Color.Black,
@@ -51,7 +52,7 @@ fun ReadMoreText(
             Text(
                 text = if (isExpanded) "Read Less" else "Read More",
                 modifier = Modifier.align(Alignment.End)
-                    .padding(top = 8.dp)
+                    .padding(top = SpacerSize.size_8)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null
@@ -59,9 +60,17 @@ fun ReadMoreText(
                         isExpanded = !isExpanded
                     },
                 color = Color.Blue,
-                fontSize = 10.sp,
+                fontSize = FontSize.size_10,
             )
         }
     }
 }
 
+@Preview()
+@Composable
+fun onReadMoreTextPreview() {
+    ReadMoreText(
+        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        minimizedMaxLines = 2
+    )
+}
