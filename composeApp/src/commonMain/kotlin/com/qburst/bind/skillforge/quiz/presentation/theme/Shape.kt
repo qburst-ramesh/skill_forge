@@ -12,14 +12,13 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 
 val Shapes = Shapes(
-    extraSmall = RoundedCornerShape(4.dp),
-    small = RoundedCornerShape(8.dp),
-    medium = RoundedCornerShape(16.dp),
-    large = RoundedCornerShape(24.dp),
-    extraLarge = RoundedCornerShape(32.dp)
+    extraSmall = RoundedCornerShape(SpacerSize.size_4),
+    small = RoundedCornerShape(SpacerSize.size_8),
+    medium = RoundedCornerShape(SpacerSize.size_16),
+    large = RoundedCornerShape(SpacerSize.size_24),
+    extraLarge = RoundedCornerShape(SpacerSize.size_32)
 )
 
 

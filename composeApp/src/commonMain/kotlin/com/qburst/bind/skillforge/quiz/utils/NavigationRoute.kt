@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.qburst.bind.skillforge.quiz.presentation.ui.landing.LandingScreen
 import com.qburst.bind.skillforge.quiz.presentation.ui.login.LoginScreen
 import com.qburst.bind.skillforge.quiz.presentation.ui.splash.SplashScreen
+import io.github.aakira.napier.Napier
 
 sealed class NavigationRoute(val name: String) {
     object Splash : NavigationRoute(name = "splash")
@@ -20,7 +21,12 @@ fun Router() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = NavigationRoute.Splash.name) {
         composable(NavigationRoute.Splash.name) {
-            SplashScreen(navController)
+            SplashScreen(
+                onNavigate = { token ->
+                    Napier.d("Route Token $token")
+                    token?.let { navController.toHome() } ?: navController.toLogin()
+                }
+            )
         }
         composable(NavigationRoute.Login.name) {
             LoginScreen(
@@ -40,6 +46,20 @@ fun NavController.toHome(
     inclusiveRoute: Boolean = true
 ) {
     this.navigate(NavigationRoute.Landing.name) {
+        popUpToRoute?.let {
+            popUpTo(popUpToRoute.name) {
+                inclusive = inclusiveRoute
+            }
+        }
+        launchSingleTop = true
+    }
+}
+
+fun NavController.toLogin(
+    popUpToRoute: NavigationRoute? = NavigationRoute.Login,
+    inclusiveRoute: Boolean = true
+) {
+    this.navigate(NavigationRoute.Login.name) {
         popUpToRoute?.let {
             popUpTo(popUpToRoute.name) {
                 inclusive = inclusiveRoute

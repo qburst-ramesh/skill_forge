@@ -13,6 +13,7 @@ import com.qburst.bind.skillforge.quiz.data.networking.safeRequest
 import com.qburst.bind.skillforge.quiz.data.repo.auth.entity.UserLoginResponse
 import com.qburst.bind.skillforge.quiz.domain.model.LoginData
 import com.qburst.bind.skillforge.quiz.domain.repo.AuthRepo
+import com.qburst.bind.skillforge.quiz.domain.repo.TokenProvider
 import com.qburst.bind.skillforge.quiz.presentation.components.GoogleUser
 import com.qburst.bind.skillforge.quiz.utils.toThrowable
 import io.ktor.client.request.setBody
@@ -27,18 +28,22 @@ data class LoginRequest(
 
 class AuthRepoImpl(
     val apiClientHelper: ApiClientHelper,
-    val mapper: Mapper<LoginData, UserLoginResponse>
+    val authMapper: Mapper<LoginData, UserLoginResponse>,
+    val tokenProvider: TokenProvider
 ) : AuthRepo {
     override suspend fun login(googleUser: GoogleUser): Result<LoginData> {
-        val response = apiClientHelper.client.safeRequest<UserLoginResponse, GoogleUser> {
-            apiEndPoint(EndPoints.login)
-            method = HttpMethod.Post
-            setBody(
-                LoginRequest(
-                    auth_token = googleUser.token
+        val response = apiClientHelper.client.safeRequest<UserLoginResponse, GoogleUser>(
+            block = {
+                apiEndPoint(EndPoints.Login)
+                method = HttpMethod.Post
+                setBody(
+                    LoginRequest(
+                        auth_token = googleUser.token
+                    )
                 )
-            )
-        }
+            },
+            tokenProvider = tokenProvider
+        )
         return when (response) {
             is ApiResponse.Error -> {
                 Result.failure("Error: ${response.getErrorData(ErrorType.LOGIN)}".toThrowable())
@@ -46,7 +51,7 @@ class AuthRepoImpl(
 
             is ApiResponse.Success<UserLoginResponse> -> {
                 val data = response.body
-                val mapperData = mapper.transform(data)
+                val mapperData = authMapper.transform(data)
                 Result.success(mapperData)
             }
         }

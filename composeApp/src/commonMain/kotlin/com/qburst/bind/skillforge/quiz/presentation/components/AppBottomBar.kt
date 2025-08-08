@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.qburst.bind.skillforge.quiz.presentation.theme.PrimaryColor
+import com.qburst.bind.skillforge.quiz.presentation.theme.SpacerSize
 import com.qburst.bind.skillforge.quiz.presentation.ui.landing.util.BottomNavigationScreen
 import com.qburst.bind.skillforge.quiz.presentation.ui.landing.util.navigationItems
 import org.jetbrains.compose.resources.painterResource
@@ -33,7 +33,7 @@ fun AppBottomBar(
                     Icon(
                         painter = painterResource(screen.icon),
                         contentDescription = screen.title,
-                        modifier = Modifier.width(24.dp).height(24.dp)
+                        modifier = Modifier.width(SpacerSize.size_24).height(SpacerSize.size_24)
                     )
                 },
                 label = {

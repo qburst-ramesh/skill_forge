@@ -99,6 +99,10 @@ kotlin {
 
             // logging
             implementation(libs.napier)
+
+            //Image Loading
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

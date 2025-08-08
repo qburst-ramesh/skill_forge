@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import com.qburst.bind.skillforge.quiz.di.appModule
 import com.qburst.bind.skillforge.quiz.presentation.theme.AppTheme
 import com.qburst.bind.skillforge.quiz.utils.Router
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.dsl.KoinAppDeclaration
@@ -17,6 +19,7 @@ fun App(koinAppDeclaration: KoinAppDeclaration? = null) {
         modules(appModule())
     }) {
         AppTheme {
+            Napier.base(DebugAntilog())
             Router()
         }
     }

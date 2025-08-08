@@ -8,6 +8,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.qburst.bind.skillforge.quiz.presentation.theme.App_bar_background_color
 import com.qburst.bind.skillforge.quiz.presentation.theme.PrimaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +43,7 @@ fun CenterAppTopBar(
         title = title,
         actions = action,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = PrimaryColor,
+            containerColor = App_bar_background_color,
             titleContentColor = Color.White
         ),
     )

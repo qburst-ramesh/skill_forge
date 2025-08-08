@@ -14,31 +14,47 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.qburst.bind.skillforge.quiz.utils.NavigationRoute
+import com.qburst.bind.skillforge.quiz.presentation.theme.FontSize
+import com.qburst.bind.skillforge.quiz.presentation.theme.SpacerSize
+import io.github.aakira.napier.Napier
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.app_name
-import kotlinproject.composeapp.generated.resources.stallion_beatsides_regular
+import kotlinproject.composeapp.generated.resources.lato_bold
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filter
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
 @Composable
-internal fun SplashScreen(navController: NavController) {
+internal fun SplashScreen(onNavigate: (token: String?) -> Unit = {}) {
+    val viewModel: SplashViewModel = koinInject()
+    val state by viewModel.uiState.collectAsState()
+    var isShowSplash by remember { mutableStateOf(true) }
 
-    val showProducts = produceState(initialValue = false) {
+    LaunchedEffect(viewModel.uiState) {
         delay(1000)
-        value = true
-        delay(1000)
-        navController.navigate(NavigationRoute.Login.name)
+        isShowSplash = false
+        delay(3000)
+        viewModel.uiState.filter { !it.loading }.collect {
+
+            Napier.e(
+                message = "Splash Token ${state.token}",
+                tag = "SplashScreen"
+            )
+            onNavigate(state.token)
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary)) {
@@ -48,24 +64,24 @@ internal fun SplashScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center
         ) {
             AnimatedVisibility(
-                showProducts.value,
+                visible = isShowSplash,
                 enter = fadeIn(animationSpec = tween(500)),
                 exit = fadeOut(animationSpec = tween(500))
             ) {
                 Text(
                     stringResource(Res.string.app_name), fontFamily = FontFamily(
                         Font(
-                            resource = Res.font.stallion_beatsides_regular,
+                            resource = Res.font.lato_bold,
                             weight = FontWeight.Normal,
                             style = FontStyle.Normal
                         )
                     ),
                     color = MaterialTheme.colorScheme.background,
-                    fontSize = 58.sp
+                    fontSize = FontSize.size_58
                 )
             }
             CircularProgressIndicator(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = SpacerSize.size_16),
                 color = MaterialTheme.colorScheme.tertiary
             )
         }

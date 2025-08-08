@@ -11,7 +11,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
+import com.qburst.bind.skillforge.quiz.presentation.theme.SpacerSize
+import com.qburst.bind.skillforge.quiz.presentation.theme.WhiteColor
 import com.qburst.bind.skillforge.quiz.presentation.theme.loginTextForgeColor
 import com.qburst.bind.skillforge.quiz.presentation.theme.loginTextSkillColor
 import kotlinproject.composeapp.generated.resources.Res
@@ -23,7 +24,8 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DualTitle(
-    textSize: TextUnit
+    textSize: TextUnit,
+    isFromHome: Boolean = false
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
@@ -35,11 +37,11 @@ fun DualTitle(
                     style = FontStyle.Normal
                 )
             ),
-            color = loginTextSkillColor,
+            color = if (isFromHome) WhiteColor else loginTextSkillColor,
             fontSize = textSize
         )
 
-        Spacer(modifier = Modifier.width(4.dp))
+        Spacer(modifier = Modifier.width(SpacerSize.size_4))
 
         Text(
             text = stringResource(Res.string.text_login_forge),

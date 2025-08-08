@@ -6,8 +6,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.qburst.bind.skillforge.common.GoogleAuthProvider
+import com.qburst.bind.skillforge.quiz.presentation.theme.SpacerSize
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
@@ -47,6 +47,6 @@ fun GoogleButtonUiContainer(
         modifier = modifier,
         color = Color.Transparent,
         content = { uiContainerScope.content() },
-        shadowElevation = 4.dp
+        shadowElevation = SpacerSize.size_4
     )
 }
