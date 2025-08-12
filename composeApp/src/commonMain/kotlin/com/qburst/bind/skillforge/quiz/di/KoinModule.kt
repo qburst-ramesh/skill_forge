@@ -12,17 +12,22 @@ import com.qburst.bind.skillforge.quiz.data.repo.auth.entity.UserLoginResponse
 import com.qburst.bind.skillforge.quiz.data.repo.home.HomeRepoImpl
 import com.qburst.bind.skillforge.quiz.data.repo.home.TokenProviderImpl
 import com.qburst.bind.skillforge.quiz.data.repo.home.entity.HomeResponseData
+import com.qburst.bind.skillforge.quiz.data.repo.quiz.QuizRepoImpl
 import com.qburst.bind.skillforge.quiz.domain.model.HomeData
 import com.qburst.bind.skillforge.quiz.domain.model.LoginData
 import com.qburst.bind.skillforge.quiz.domain.repo.AuthRepo
 import com.qburst.bind.skillforge.quiz.domain.repo.HomeRepo
+import com.qburst.bind.skillforge.quiz.domain.repo.QuizRepo
 import com.qburst.bind.skillforge.quiz.domain.repo.TokenProvider
 import com.qburst.bind.skillforge.quiz.domain.usecase.home.HomeUseCase
 import com.qburst.bind.skillforge.quiz.domain.usecase.home.HomeUseCaseImpl
 import com.qburst.bind.skillforge.quiz.domain.usecase.login.LoginUseCase
 import com.qburst.bind.skillforge.quiz.domain.usecase.login.LoginUseCaseImpl
+import com.qburst.bind.skillforge.quiz.domain.usecase.quiz.QuizUseCase
+import com.qburst.bind.skillforge.quiz.domain.usecase.quiz.QuizUseCaseImpl
 import com.qburst.bind.skillforge.quiz.presentation.ui.landing.home.HomeViewModel
 import com.qburst.bind.skillforge.quiz.presentation.ui.login.LoginViewModel
+import com.qburst.bind.skillforge.quiz.presentation.ui.quiz.QuizViewModel
 import com.qburst.bind.skillforge.quiz.presentation.ui.splash.SplashViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.qualifier.named
@@ -77,6 +82,12 @@ val dataModule = module {
             mapper = get(named(HOME_MAPPER_NAME))
         )
     }
+
+    single<QuizRepo> {
+        QuizRepoImpl(
+
+        )
+    }
 }
 
 val useCaseModule = module {
@@ -90,12 +101,18 @@ val useCaseModule = module {
             homeRepo = get()
         )
     }
+    single<QuizUseCase> {
+        QuizUseCaseImpl(
+            quizRepo = get()
+        )
+    }
 }
 
 val viewModelModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::SplashViewModel)
     viewModelOf(::HomeViewModel)
+    viewModelOf(::QuizViewModel)
 }
 
 val mapperModule = module {

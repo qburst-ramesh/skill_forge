@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.qburst.bind.skillforge.quiz.presentation.ui.landing.LandingScreen
 import com.qburst.bind.skillforge.quiz.presentation.ui.login.LoginScreen
+import com.qburst.bind.skillforge.quiz.presentation.ui.quiz.QuizRulesScreen
 import com.qburst.bind.skillforge.quiz.presentation.ui.splash.SplashScreen
 import io.github.aakira.napier.Napier
 
@@ -14,6 +15,7 @@ sealed class NavigationRoute(val name: String) {
     object Splash : NavigationRoute(name = "splash")
     object Login : NavigationRoute(name = "login")
     object Landing : NavigationRoute(name = "landing")
+    object QuizRules : NavigationRoute(name = "quizRules")
 }
 
 @Composable
@@ -38,6 +40,9 @@ fun Router() {
         composable(NavigationRoute.Landing.name) {
             LandingScreen()
         }
+        composable(NavigationRoute.QuizRules.name) {
+            QuizRulesScreen()
+        }
     }
 }
 
@@ -60,6 +65,20 @@ fun NavController.toLogin(
     inclusiveRoute: Boolean = true
 ) {
     this.navigate(NavigationRoute.Login.name) {
+        popUpToRoute?.let {
+            popUpTo(popUpToRoute.name) {
+                inclusive = inclusiveRoute
+            }
+        }
+        launchSingleTop = true
+    }
+}
+
+fun NavController.toQuizRules(
+    popUpToRoute: NavigationRoute? = NavigationRoute.QuizRules,
+    inclusiveRoute: Boolean = true
+) {
+    this.navigate(NavigationRoute.QuizRules.name) {
         popUpToRoute?.let {
             popUpTo(popUpToRoute.name) {
                 inclusive = inclusiveRoute

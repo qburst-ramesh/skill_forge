@@ -19,4 +19,17 @@
     <string name="explore">Explore</string>
     <string name="start_quiz">Start Quiz</string>
 
+    <!--Quiz Rules-->
+    <string name="quiz_rules_title">Quiz Rules</string>
+    <string name="title_topic">Topic:</string>
+    <string name="title_description">Description:</string>
+    <string name="title_difficulty_level">Difficulty Level:</string>
+    <string name="quiz_agreement">I have read and agree to the rules</string>
+    <string name="difficulty_level_button">Edit Difficulty Level</string>
+    <string name="quiz_rules_dialog_title">Customize your challenge:</string>
+    <string name="select_level">Select Level</string>
+    <string name="quiz_rules_dialog_confirm_button">Confirm</string>
+    <string name="quiz_rules_agree_request">Please agree to the rules</string>
+    <string name="quiz_rules_dialog_select_difficulty_title">Please select a difficulty level.</string>
+
 </resources>
